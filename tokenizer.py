@@ -6,6 +6,7 @@ def preprocess_text(text):
     text = re.sub(r"http\S+|www\S+|https\S+", "URL", text)
     text = re.sub(r"@\w+", "MENTION", text)
     text = re.sub(r"#\w+", "HASHTAG", text)
+    text = re.sub(r"#\w+", "HASHTAG", text)
     text = re.sub(r"\b\d+(\.\d+)?\s?%", "PERCENTAGE", text)
     text = re.sub(r"\b\d+\s?(years old|yrs old|yo|years|yrs)\b", "AGE", text, flags=re.IGNORECASE)
     text = re.sub(r"\b\d{1,2}:\d{2}(?:\s?[APap][Mm])?\b", "TIME", text)

@@ -203,9 +203,9 @@ The dog chased the cat.    40.5678
 Perplexity scores are saved in files named:
 
 ```
-<roll number>_LM1_N_test-perplexity.txt (Laplace Smoothing)
-<roll number>_LM2_N_test-perplexity.txt (Good-Turing Smoothing)
-<roll number>_LM3_N_test-perplexity.txt (Linear Interpolation)
+LM1_N_test-perplexity.txt (Laplace Smoothing)
+LM2_N_test-perplexity.txt (Good-Turing Smoothing)
+LM3_N_test-perplexity.txt (Linear Interpolation)
 ```
 
 Replace `<roll number>` with your actual roll number and `N` with the N-gram value (1, 3, or 5).

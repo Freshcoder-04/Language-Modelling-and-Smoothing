@@ -17,20 +17,6 @@ def pad_sentence(sentence, k, start_token="<s>"):
 
 
 def generate_k_gram_models_with_counts(corpus_path, n):
-    """
-    Generates k-gram models and (k-1)-gram counts for all k from 1 to n.
-
-    Args:
-        corpus_path (str): Path to the corpus file.
-        n (int): The maximum value of N for the N-gram models.
-        tokenizer (function): The tokenizer function to preprocess and tokenize the text.
-
-    Returns:
-        tuple: Two lists and vocabulary size:
-            - n_gram_counts_list: A list of dictionaries with k-gram counts for k from 1 to n.
-            - n_minus_1_gram_counts_list: A list of dictionaries with (k-1)-gram counts for k from 1 to n.
-            - vocabulary_size: The size of the vocabulary in the corpus.
-    """
     n_gram_counts_list = []
     n_minus_1_gram_counts_list = []
     vocabulary = set()
@@ -69,40 +55,12 @@ def generate_k_gram_models_with_counts(corpus_path, n):
 
 
 def laplace_conditional_probability(n_gram, n_minus_1_gram, n_gram_counts, n_minus_1_gram_counts, vocabulary_size):
-    """
-    Calculates the conditional probability of an N-gram using Laplace smoothing.
-
-    Args:
-        n_gram (tuple): The N-gram.
-        n_minus_1_gram (tuple): The (N-1)-gram.
-        n_gram_counts (dict): Dictionary with N-gram counts.
-        n_minus_1_gram_counts (dict): Dictionary with (N-1)-gram counts.
-        vocabulary_size (int): Size of the vocabulary.
-
-    Returns:
-        float: The conditional probability of the N-gram.
-    """
     n_gram_count = n_gram_counts.get(n_gram, 0)
     n_minus_1_gram_count = n_minus_1_gram_counts.get(n_minus_1_gram, 0)
     return (n_gram_count + 1) / (n_minus_1_gram_count + vocabulary_size)
 
 
 def good_turing_conditional_probability(n_gram, n_minus_1_gram, n_gram_counts, n_minus_1_gram_counts, vocabulary_size, count_of_counts, plot=False):
-    """
-    Calculates the conditional probability of an N-gram using Good-Turing smoothing.
-
-    Args:
-        n_gram (tuple): The N-gram.
-        n_minus_1_gram (tuple): The (N-1)-gram.
-        n_gram_counts (dict): Dictionary with N-gram counts.
-        n_minus_1_gram_counts (dict): Dictionary with (N-1)-gram counts.
-        vocabulary_size (int): Size of the vocabulary.
-        count_of_counts (dict): Dictionary with count of counts (N_r).
-        plot (bool): If True, plot the Nr vs r curve in log-log scale and fit a line.
-
-    Returns:
-        float: The conditional probability of the N-gram.
-    """
     # Step 1: Prepare data for plotting (Nr vs r)
     r_values = sorted(count_of_counts.keys())
     Nr_values = [count_of_counts[r] for r in r_values]
@@ -180,19 +138,6 @@ def good_turing_conditional_probability(n_gram, n_minus_1_gram, n_gram_counts, n
 
 
 def linear_interpolation_conditional_probability(n_gram, n_gram_counts_list, n_minus_1_gram_counts_list, vocabulary_size, lambdas):
-    """
-    Calculates the conditional probability of an N-gram using linear interpolation.
-
-    Args:
-        n_gram (tuple): The N-gram.
-        n_gram_counts_list (list): List of dictionaries with k-gram counts for k from 1 to n.
-        n_minus_1_gram_counts_list (list): List of dictionaries with (k-1)-gram counts for k from 1 to n.
-        vocabulary_size (int): Size of the vocabulary.
-        lambdas (list): List of weights for each k-gram model (e.g., [λ1, λ2, λ3]).
-
-    Returns:
-        float: The conditional probability of the N-gram.
-    """
     interpolated_probability = 0.0
     for k in range(len(lambdas)):
         n_gram_k = n_gram[k:]  # Use (k+1)-gram
@@ -215,22 +160,6 @@ def linear_interpolation_conditional_probability(n_gram, n_gram_counts_list, n_m
 
 
 def calculate_sentence_probability(sentence, n, n_gram_counts_list, n_minus_1_gram_counts_list, vocabulary_size, smoothing_method, lambdas=None, plot=False):
-    """
-    Calculates the probability of a sentence using the specified smoothing method.
-
-    Args:
-        sentence (str): The input sentence.
-        n (int): The value of N for the N-gram model.
-        n_gram_counts_list (list): List of dictionaries with k-gram counts for k from 1 to n.
-        n_minus_1_gram_counts_list (list): List of dictionaries with (k-1)-gram counts for k from 1 to n.
-        vocabulary_size (int): Size of the vocabulary.
-        smoothing_method (str): The smoothing method to use ('laplace', 'good_turing', 'interpolation').
-        lambdas (list): List of weights for each k-gram model (required for interpolation).
-        plot (bool): If True, plot the Nr vs r curve in log-log scale and fit a line (for Good-Turing).
-
-    Returns:
-        tuple: The probability and perplexity of the sentence.
-    """
     tokenized_sentence = custom_nlp_tokenizer(sentence)[0]
     if len(tokenized_sentence) < n:
         tokenized_sentence = pad_sentence(tokenized_sentence, n - len(tokenized_sentence))

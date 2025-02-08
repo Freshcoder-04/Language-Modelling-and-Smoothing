@@ -299,7 +299,7 @@ if __name__ == "__main__":
             P, PP = calculate_sentence_probability(input_sentence, n, n_gram_counts_list, n_minus_1_gram_counts_list, vocabulary_size, smoothing_method='laplace')
             print(f"Score: {PP}, Probability: {P}")
         elif lm_type == 'g':
-            P, PP = calculate_sentence_probability(input_sentence, n, n_gram_counts_list, n_minus_1_gram_counts_list, vocabulary_size, smoothing_method='good_turing', plot=False)
+            P, PP = calculate_sentence_probability(input_sentence, n, n_gram_counts_list, n_minus_1_gram_counts_list, vocabulary_size, smoothing_method='good_turing', plot=True)
             print(f"Score: {PP}, Probability: {P}")
         elif lm_type == 'i':
             P, PP = calculate_sentence_probability(input_sentence, n, n_gram_counts_list, n_minus_1_gram_counts_list, vocabulary_size, smoothing_method='interpolation', lambdas=lambdas)

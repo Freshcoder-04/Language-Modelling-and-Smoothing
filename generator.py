@@ -155,17 +155,17 @@ if __name__ == "__main__":
         input_sentence = input("Input sentence: ").strip()
 
         # Prompt the user for sequence generation
-        generate_seq = input("Generate a sequence? (y/n): ").strip().lower() == 'y'
+        # generate_seq = input("Generate a sequence? (y/n): ").strip().lower() == 'y'
         
-        if generate_seq:
-            sequence_length = int(input("Enter the desired sequence length: ").strip())
-            generated_sequence = generate_sequence(input_sentence, n, n_gram_counts_list, n_minus_1_gram_counts_list, vocabulary_size, smoothing_method, sequence_length, lambdas)
-            print(f"Generated Sequence: {generated_sequence}")
-        else:
-            # Get the top k next words and their probabilities
-            top_k_next_words = get_top_k_next_words(input_sentence, n, n_gram_counts_list, n_minus_1_gram_counts_list, vocabulary_size, smoothing_method, k, lambdas)
+        # if generate_seq:
+        #     sequence_length = int(input("Enter the desired sequence length: ").strip())
+        #     generated_sequence = generate_sequence(input_sentence, n, n_gram_counts_list, n_minus_1_gram_counts_list, vocabulary_size, smoothing_method, sequence_length, lambdas)
+        #     print(f"Generated Sequence: {generated_sequence}")
+        # else:
+        # Get the top k next words and their probabilities
+        top_k_next_words = get_top_k_next_words(input_sentence, n, n_gram_counts_list, n_minus_1_gram_counts_list, vocabulary_size, smoothing_method, k, lambdas)
 
-            # Print the results
-            for word, prob in top_k_next_words:
-                print(f"{word} {prob:.4f}")
+        # Print the results
+        for word, prob in top_k_next_words:
+            print(f"{word} {prob:.4f}")
     
